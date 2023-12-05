@@ -1,23 +1,31 @@
 package com.ig.safemoney.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 @Entity
+@Table(name="transacao")
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String title;
+
     private String category;
+
     private BigDecimal amount;
-    private String date;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Date data;
 
     public Transaction() {
     }
@@ -26,12 +34,12 @@ public class Transaction {
                        String title,
                        String category,
                        BigDecimal amount,
-                       String date) {
+                       Date data) {
         this.id = id;
         this.title = title;
         this.category = category;
         this.amount = amount;
-        this.date = date;
+        this.data = data;
     }
 
     public Integer getId() {
@@ -66,12 +74,12 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getDate() {
-        return date;
+    public Date getData() {
+        return data;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setData(Date data) {
+        this.data = data;
     }
 
     @Override
@@ -81,7 +89,7 @@ public class Transaction {
                 ", title='" + title + '\'' +
                 ", category='" + category + '\'' +
                 ", amount=" + amount +
-                ", date='" + date + '\'' +
+                ", data=" + data +
                 '}';
     }
 }

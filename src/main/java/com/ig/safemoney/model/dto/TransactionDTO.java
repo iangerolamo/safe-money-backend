@@ -1,13 +1,20 @@
 package com.ig.safemoney.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class TransactionDTO {
 
     private String title;
     private String category;
     private BigDecimal amount;
-    private String date;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Date date;
 
     public TransactionDTO() {
     }
@@ -15,7 +22,7 @@ public class TransactionDTO {
     public TransactionDTO(String title,
                           String category,
                           BigDecimal amount,
-                          String date) {
+                          Date date) {
         this.title = title;
         this.category = category;
         this.amount = amount;
@@ -46,11 +53,11 @@ public class TransactionDTO {
         this.amount = amount;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -60,7 +67,7 @@ public class TransactionDTO {
                 "title='" + title + '\'' +
                 ", category='" + category + '\'' +
                 ", amount=" + amount +
-                ", date='" + date + '\'' +
+                ", date=" + date +
                 '}';
     }
 }
