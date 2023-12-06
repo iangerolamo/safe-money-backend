@@ -40,7 +40,7 @@ public class BalanceService {
 
     public List<BalanceDTO> getBalanceByDateRange(
             @DateTimeFormat(pattern = "dd-MM-yyyy") Date startDate,
-            @DateTimeFormat(pattern = "dd-MM-yyyy")Date endDate
+            @DateTimeFormat(pattern = "dd-MM-yyyy") Date endDate
     ) {
         List<Transaction> transactions = transactionRepository.findByDateRange(startDate, endDate);
         return this.getBalance(transactions);
@@ -83,30 +83,25 @@ public class BalanceService {
         billsBalance.setAmount(totalBills);
         otherBalance.setAmount(totalOthers);
 
-        if (revenueBalance.getAmount().compareTo(BigDecimal.ZERO) > 0) {
-            revenueBalance.setCategory("Revenue");
-            balance.add(revenueBalance);
-        }
+        revenueBalance.setCategory("Revenue");
+        balance.add(revenueBalance);
 
-        if (shoppingBalance.getAmount().compareTo(BigDecimal.ZERO) > 0) {
-            shoppingBalance.setCategory("Shopping");
-            balance.add(shoppingBalance);
-        }
 
-        if (foodBalance.getAmount().compareTo(BigDecimal.ZERO) > 0) {
-            foodBalance.setCategory("Food & Drinks");
-            balance.add(foodBalance);
-        }
+        shoppingBalance.setCategory("Shopping");
+        balance.add(shoppingBalance);
 
-        if (billsBalance.getAmount().compareTo(BigDecimal.ZERO) > 0) {
-            billsBalance.setCategory("Bills & Utilities");
-            balance.add(billsBalance);
-        }
 
-        if (otherBalance.getAmount().compareTo(BigDecimal.ZERO) > 0) {
-            otherBalance.setCategory("Others");
-            balance.add(otherBalance);
-        }
+        foodBalance.setCategory("Food & Drinks");
+        balance.add(foodBalance);
+
+
+        billsBalance.setCategory("Bills & Utilities");
+        balance.add(billsBalance);
+
+
+        otherBalance.setCategory("Others");
+        balance.add(otherBalance);
+
 
         return balance;
     }
