@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200") // Especifique o domínio permitido
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/balance")
 public class BalanceController {
 
