@@ -24,10 +24,17 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity efetuarLogin(@RequestBody LoginDTO loginDTO) {
-        var token = new UsernamePasswordAuthenticationToken(loginDTO.getLogin(), loginDTO.getSenha());
-        var authentication = manager.authenticate(token);
-        var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
-        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+    public ResponseEntity efetuarLogin(@RequestBody LoginDTO dados) {
+        try {
+            var authenticationToken = new UsernamePasswordAuthenticationToken(dados.getLogin(), dados.getSenha());
+            var authentication = manager.authenticate(authenticationToken);
+
+            var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+
+            return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
