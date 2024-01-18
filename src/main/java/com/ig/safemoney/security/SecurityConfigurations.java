@@ -18,6 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfigurations {
 
+    private static final String[] PUBLIC_MATCHERS_GET = {"/usuarios", "/helloworld"};
+
+    private static final String[] PUBLIC_MATCHERS_POST = {"/login", "/usuario"};
+
+    private static final String[] PUBLIC_MATCHERS = {"/h2-console/**"};
+
+
     @Autowired
     private SecurityFilter securityFilter;
 
@@ -26,7 +33,7 @@ public class SecurityConfigurations {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers(HttpMethod.POST, "/login").permitAll();
+                    req.requestMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
